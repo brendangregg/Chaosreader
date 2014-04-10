@@ -843,7 +843,7 @@ sub Read_Input_File {
 	$CountMaster{EtherType}{$ether_type}++;
 	
 	#
-	#  Process extended Ethernet types (wireless, PPPoE)
+	#  Process extended Ethernet types (wireless, PPPoE, VLAN)
 	#
 
 	### PPPoE
@@ -857,8 +857,13 @@ sub Read_Input_File {
 		# (May like to add code here later to process $ppp_protocol,
 		# eg, to process LCP).
 	}
+	### VLAN tagged
+	elsif ($ether_type eq "8100") {
+	  ($vlan_PCP, $orig_ether_type, $ip_rest) = unpack('H4H4a*', $ether_data);
+	  $ether_data = $ip_rest;
+	}
 
-	elsif (($ether_type ne "0800") && ($ether_type ne "86dd")) {
+	elsif (($ether_type ne "0800") && ($ether_type ne "86dd") && ($ether_type ne "8100")) {
 		next;
 	}
 
