@@ -1,10 +1,6 @@
-chaosreader
+Chaosreader
 ===========
 
-A fork of Brendan Greggs [chaosreader](http://www.brendangregg.com/chaosreader.html)
+An any-snarf program that processes application protocols (HTTP/FTP/...) from tcpdump or snoop files and stores session and file data
 
-Including patches by Jens Lechtenbörger http://www.informationelle-selbstbestimmung-im-internet.de/chaosreader.html
-
-## Patches :
-
-* Handling `Content-Encoding: deflate`
+Website: http://www.brendangregg.com/chaosreader.html
