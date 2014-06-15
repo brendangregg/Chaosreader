@@ -1,26 +1,26 @@
 #!/usr/bin/perl
 #
 # Chaosreader can trace TCP/UDP/... sessions and fetch application data
-#  from tcpdump or snoop logs. This is like an "any-snarf" program, it will
-#  fetch telnet sessions, FTP files, HTTP transfers (HTML, GIF, JPEG, ...),
-#  SMTP emails, etc ... from the captured data inside the network traffic
-#  logs. It creates a html index file that links to all the session details,
-#  including realtime replay programs for telnet, rlogin or IRC sessions;
-#  and reports such as image reports and HTTP GET/POST content reports.
-#  It also creates replay programs for telnet sessions, so that you can
-#  play them back in realtime (or even different speeds).
+# from tcpdump or snoop logs. This is like an "any-snarf" program, it will
+# fetch telnet sessions, FTP files, HTTP transfers (HTML, GIF, JPEG, ...),
+# SMTP emails, etc ... from the captured data inside the network traffic
+# logs. It creates a html index file that links to all the session details,
+# including realtime replay programs for telnet, rlogin or IRC sessions;
+# and reports such as image reports and HTTP GET/POST content reports.
+# It also creates replay programs for telnet sessions, so that you can
+# play them back in realtime (or even different speeds).
 #
 # Chaosreader can also run in standalone mode - where it invokes tcpdump or
-#  snoop (if they are available) to create the log files and then processes
-#  them.
+# snoop (if they are available) to create the log files and then processes
+# them.
 #
+# 15-Jun-2014, ver 0.96		https://github.com/brendangregg/Chaosreader
 #
-# 05-May-2004, ver 0.94  (check for new versions, http://www.brendangregg.com)
-#			 (or run a web search for "chaosreader")
+# Chaosreader currently lives in that github location. If 2014 sounds really
+# old, you may want to run a web search for "chaosreader" in case it's updated
+# somewhere else. Also see http//www.brendangregg.com/chaosreader.html.
 #
-# (http://www.brendangregg.com/chaosreader.html seems to be outdated.
-# E-mail to the address brendan@sun.com mentioned on that web site returned
-# with an error.)
+# Recent versions:
 #
 # 11-Sep-2011, ver 0.95
 # 24-Sep 2011, ver 0.95b
@@ -108,7 +108,8 @@
 #                              # each. View index.html for progress (or .text)
 #
 # Output Files: Many will be created, run this in a clean directory.
-#  Short example,
+#
+#  Short example:
 #   index.html			Html index (full details)
 #   index.text			Text index
 #   index.file			File index for standalone redo mode
@@ -127,7 +128,8 @@
 #   session_0004.part_01.gif	HTTP portion of the above, a GIF file
 #   session_0005.part_01.ftp-data.gz	An FTP transfer, a gz file.
 #   ...
-#  The convention is,
+#
+#  The convention is:
 #   session_*		TCP Sessions
 #   stream_*		UDP Streams
 #   icmp_*		ICMP packets
@@ -207,10 +209,10 @@
 #    number loops (or even wraps).
 #
 # WARNING: Please don't use this software for anything illegal. That definition
-#  differs for every country, please check the law first.
-#  This is a great network troubleshooting and development tool, not a
-#  "cracking" or "hacking" tool - a misidentification that could render owning
-#  this software illegal in some countries.
+# differs for every country, please check the law first.
+# This is a great network troubleshooting and development tool, not a
+# "cracking" or "hacking" tool - a misidentification that could render owning
+# this software illegal in some countries.
 #
 # SEE ALSO: wireshark (GUI packet viewer), dsniff (sniffing toolkit)
 #
