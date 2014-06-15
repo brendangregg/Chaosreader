@@ -9,9 +9,14 @@ Various protocols and file transfers are supported, including telnet sessions, F
 
 Chaosreader can also run in standalone mode - where it invokes tcpdump or snoop (if they are available) to create the log files and then processes them.
 
-This is an updated fork of my original [chaosreader](http://www.brendangregg.com/chaosreader.html), and includes patches by Jens Lechtenbörger http://www.informationelle-selbstbestimmung-im-internet.de/chaosreader.html and ohters.
+This is an updated fork of my original [chaosreader](http://www.brendangregg.com/chaosreader.html), and includes patches by Jens Lechtenbörger http://www.informationelle-selbstbestimmung-im-internet.de/chaosreader.html and others.
 
+### Internals
 
-## Patches :
+This is a stand-alone Perl program that reads binary tcpdump/snoop files, and performs both TCP and IP-fragment reassembly.
+
+I've had many thank-you emails to say people appreciated the convenience of this being a stand-alone script, which doesn't require various CPAN modules. Yes, it's convenient, but there was also nothing on CPAN to do raw TCP packet processing and session reassembly, or raw IP packet processing and IP fragment reassembly.
+
+### Patches:
 
 * Handling `Content-Encoding: deflate`
