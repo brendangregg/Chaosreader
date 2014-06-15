@@ -11,11 +11,11 @@ Chaosreader can also run in standalone mode - where it invokes tcpdump or snoop 
 
 This is an updated fork of my original [chaosreader](http://www.brendangregg.com/chaosreader.html), and includes patches by Jens Lechtenbörger http://www.informationelle-selbstbestimmung-im-internet.de/chaosreader.html and others.
 
-### Internals
+### Dependencies
 
-This is a stand-alone Perl program that reads binary tcpdump/snoop files, and performs both TCP and IP-fragment reassembly.
+This is a Perl program that reads binary tcpdump/snoop files, and performs both TCP and IP-fragment reassembly. It originally required no additional CPAN modules, in part, because the modules I really wanted (TCP and IP packet processing) didn't exist, and also for the convenience. Some CPAN modules have since been added in the latest version. 
 
-I've had many thank-you emails to say people appreciated the convenience of this being a stand-alone script, which doesn't require various CPAN modules. Yes, it's convenient, but there was also nothing on CPAN to do raw TCP packet processing and session reassembly, or raw IP packet processing and IP fragment reassembly.
+If dependencies are a problem, see the older version under older_versions/chaosreader0.94.
 
 ### Patches:
 
