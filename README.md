@@ -13,9 +13,9 @@ This is an updated fork of my original [chaosreader](http://www.brendangregg.com
 
 ### Dependencies
 
-This is a Perl program that reads binary tcpdump/snoop files, and performs both TCP and IP-fragment reassembly. It originally required no additional CPAN modules, in part, because the modules I really wanted (TCP and IP packet processing) didn't exist, and also for the convenience. Some CPAN modules have since been added in the latest version. 
+This is a Perl program that reads binary tcpdump/snoop files, and performs both TCP and IP-fragment reassembly. It uses a minimal set of modules, which may already exist in your Perl distribution, requiring no additions from CPAN.
 
-If dependencies are a problem, see the older version under older_versions/chaosreader0.94.
+More modules were added in the latest version. If these are a problem, other than adding the required modules, there is also an older version under older_versions/chaosreader0.94.
 
 ### Patches:
 
