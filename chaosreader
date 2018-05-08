@@ -1073,13 +1073,14 @@ sub Read_Input_File {
 	#  Store IP data in %IP so we can do frag reassembly next
 	#
 	if (! defined $IP{id}{$ip_id}{StartTime}) {
-		$IP{time}{$packet_timefull}{ver} = $ip_ver;
-		$IP{time}{$packet_timefull}{src} = $ip_src;
-		$IP{time}{$packet_timefull}{dest} = $ip_dest;
-		$IP{time}{$packet_timefull}{protocol} = $ip_protocol;
-		$IP{time}{$packet_timefull}{frag}{$ip_frag} = $ip_data;
+		$packet_timefull_str = sprintf("%.06f",$packet_timefull);
+		$IP{time}{$packet_timefull_str}{ver} = $ip_ver;
+		$IP{time}{$packet_timefull_str}{src} = $ip_src;
+		$IP{time}{$packet_timefull_str}{dest} = $ip_dest;
+		$IP{time}{$packet_timefull_str}{protocol} = $ip_protocol;
+		$IP{time}{$packet_timefull_str}{frag}{$ip_frag} = $ip_data;
 		if ($snoop_drops || $tcpdump_drops) {
-			$IP{time}{$packet_timefull}{drops} = 1;
+			$IP{time}{$packet_timefull_str}{drops} = 1;
 		}
 		#
 		#  If there are more fragments, remember this starttime
@@ -1088,13 +1089,13 @@ sub Read_Input_File {
 			$IP{id}{$ip_id}{StartTime} = $packet_timefull;
 		}
 		if (($ip_MF == 1) || ($ip_frag > 0)) {
-			$IP{time}{$packet_timefull}{fragged} = 1;
+			$IP{time}{$packet_timefull_str}{fragged} = 1;
 		}
 	} else {
 		$start_time = $IP{id}{$ip_id}{StartTime};
-		$IP{time}{$start_time}{frag}{$ip_frag} = $ip_data;
+		$IP{time}{sprintf("%.06f", $start_time)}{frag}{$ip_frag} = $ip_data;
 		if ($snoop_drops || $tcpdump_drops) {
-			$IP{time}{$packet_timefull}{drops} = 1;
+			$IP{time}{$packet_timefull_str}{drops} = 1;
 		}
 		if ($ip_MF == 0) {
 			#
