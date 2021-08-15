@@ -1,0 +1,208 @@
+NAME
+  chaosreader - trace network sessions and export it to html format
+
+SYNOPSIS
+  chaosreader
+
+  chaosreader [-adehiknqrvxAHIRTUXY] [-D dir]
+              [-b port[,...]] [-B port[,...]]
+              [-j IPaddr[,...]] [-J IPaddr[,...]]
+              [-l port[,...]] [-L port[,...]] [-m bytes[k]]
+              [-M bytes[k]] [-o "time"|"size"|"type"|"ip"]
+              [-p port[,...]] [-P port[,...]]
+              infile [infile2 ...]
+
+  chaosreader -s [mins] | -S [mins[,count]]
+              [-z] [-f 'filter']
+
+DESCRIPTION
+  Chaosreader traces TCP/UDP/others sessions and fetches application data from
+  snoop or tcpdump logs. This is a type of "any-snarf" program, as it will
+  fetch telnet sessions, FTP files, HTTP transfers (HTML, GIF, JPEG etc) and
+  SMTP emails from the captured data inside network traffic logs. A html index
+  file is created to that links to all the session details, including realtime
+  replay programs for telnet, rlogin, IRC, X11 and VNC sessions. Chaosreader
+  reports such as image reports and HTTP GET/POST content reports.
+
+  It also creates replay programs for telnet sessions, so that you can play
+  them back in realtime (or even different speeds).
+
+  Chaosreader can also run in standalone mode, where it invokes tcpdump or
+  snoop (a similar to tcpdump program for Solaris) to create the log files
+  and then processes them.
+
+OPTIONS
+  -a, --application      Create application session files (default).
+  -d, --preferdns        Show DNS names instead of IP addresses.
+  -e, --everything       Create HTML 2-way & hex files for everything.
+  -h                     Print a brief help.
+  --help                 Print verbose help (this) and version.
+  --help2                Print massive help.
+  -i, --info             Create info file.
+  -q, --quiet            Quiet, no output to screen.
+  -r, --raw              Create raw files.
+  -v, --verbose          Verbose.
+  -x, --index            Create index files (default).
+  -A, --noapplication    Exclude application session files.
+  -H, --hex              Include hex dumps (slow).
+  -I, --noinfo           Exclude info files.
+  -R, --noraw            Exclude raw files.
+  -T, --notcp            Exclude TCP traffic.
+  -U, --noudp            Exclude UDP traffic.
+  -Y, --noicmp           Exclude ICMP traffic.
+  -X, --noindex          Exclude index files.
+  -k, --keydata          Create extra files for keystroke analysis.
+  -n, --names            Include hostnames in hyperlinked HTTPlog (HTML)
+  -D dir, --dir dir           Output all files to this directory.
+  -b 25,79, --playtcp 25,79   Replay these TCP ports as well (playback).
+  -B 36,42, --playudp 36,42   Replay these UDP ports as well (playback).
+  -l 7,79, --htmltcp 7,79     Create HTML for these TCP ports as well.
+  -L 7,123, --htmludp 7,123   Create HTML for these UDP ports as well.
+  -m 1k, --min 1k             Min size of connection to save ("k" for Kb).
+  -M 1024k, --max 1k          Max size of connection to save ("k" for Kb)
+  -o size, --sort size        Sort Order: time/size/type/ip (Default time).
+  -p 21,23, --port 21,23      Only examine these ports (TCP & UDP).
+  -P 80,81, --noport 80,81    Exclude these ports (TCP & UDP).
+  -s 5, --runonce 5           Standalone. Run tcpdump/snoop for 5 mins.
+  -S 5,10, --runmany 5,10     Standalone, many. 10 samples of 5 mins each.
+  -S 5, --runmany 5           Standalone, endless. 5 min samples forever.
+  -z, --runredo               Standalone, redo. Rereads last run's logs.
+  -j 10.1.2.1, --ipaddr 10.1.2.1     Only examine these IPs.
+  -J 10.1.2.1, --noipaddr 10.1.2.1   Exclude these IPs.
+  -f 'port 7', --filter 'port 7'     With standalone, use this dump filter.
+
+OUTPUT FILES
+  Many files will be created, run this in a clean directory. Short example:
+
+  index.html                  Html index (full details).
+  index.text                  Text index.
+  index.file                  File index for standalone redo mode.
+  image.html                  HTML report of images.
+  getpost.html                HTML report of HTTP GET/POST requests.
+  session_0001.info           Info file describing TCP session #1.
+  session_0001.telnet.html    HTML colored 2-way capture (time sorted).
+  session_0001.telnet.raw     Raw data 2-way capture (time sorted).
+  session_0001.telnet.raw1    Raw 1-way capture (assembled) server->client.
+  session_0001.telnet.raw2    Raw 1-way capture (assembled) client->server.
+  session_0002.web.html       HTML colored 2-way.
+  session_0002.part_01.html   HTTP portion of the above, a HTML file.
+  session_0003.web.html       HTML colored 2-way.
+  session_0003.part_01.jpeg   HTTP portion of the above, a JPEG file.
+  session_0004.web.html       HTML colored 2-way.
+  session_0004.part_01.gif    HTTP portion of the above, a GIF file.
+  session_0005.part_01.ftp-data.gz    An FTP transfer, a gz file.
+
+CONVENTIONS
+  session_*           TCP Sessions.
+  stream_*            UDP Streams.
+  icmp_*              ICMP packets.
+  index.html          HTML Index.
+  index.text          Text Index.
+  index.file          File Index for standalone redo mode only.
+  image.html          HTML report of images.
+  getpost.html        HTML report of HTTP GET/POST requests.
+  *.info              Info file describing the Session/Stream.
+  *.raw               Raw data 2-way capture (time sorted).
+  *.raw1              Raw 1-way capture (assembled) server->client.
+  *.raw2              Raw 1-way capture (assembled) client->server.
+  *.replay            Session replay program (perl).
+  *.partial.*         Partial capture (tcpdump/snoop were aware of drops).
+  *.hex.html          2-way Hex dump, rendered in colored HTML.
+  *.hex.text          2-way Hex dump in plain text.
+  *.X11.replay        X11 replay script (talks X11).
+  *.textX11.replay    X11 communicated text replay script (text only).
+  *.textX11.html      2-way text report, rendered in red/blue HTML.
+  *.keydata           Keystroke delay data file. Used for SSH analysis.
+
+MODES
+  Normal  eg "chaosreader infile", this is where a tcpdump/snoop file
+          was created previously and chaosreader reads and processes it.
+  Standalone once  eg "chaosreader -s 10" this is where chaosreader
+                  runs tcpdump/snoop and generates the log file, in
+                  this case for 10 minutes, and then processes the result.
+                  Some OS's may not have tcpdump or snoop available so
+                  this will not work (instead you may be able to get
+                  Ethereal, run it, save to a file, then use normal mode).
+                  There is a master index.html and the report index.html
+                  in a sub dir, which is of the format out_YYYYMMDD-hhmm,
+                  eg "out_20031003-2221".
+  Standalone, many  eg "chaosreader -S 5,12", this is where chaosreader
+                    runs tcpdump/snoop and generates many log files, in
+                    this case it samples 12 times for 5 minutes each.
+                    While this is running, the master index.html can be
+                    viewed to watch progress, which links to minor index.html
+                    reports in each sub directory.
+  Standalone, redo  eg "chaosreader -ve -z", (the -z), this is where a
+                    standalone capture was previously performed - and now you
+                    would like to reprocess the logs - perhaps with different
+                    options (in this case, "-ve"). It reads index.file to
+                    determine which capture logs to read.
+  Standalone, endless  eg "chaosreader -S 5", like standalone many - but runs
+                       forever (if you ever had the need?). Watch your disk
+                       space!
+
+  Note: this is a work in progress, some of the code is a little unpolished.
+
+NOTES
+  * Run chaosreader in an empty directory.
+  * Create small packet dumps. Chaosreader uses around 5x the dump size
+    in memory. A 100Mb file could need 500Mb of RAM to process.
+  * Your tcpdump may allow "-s0" (entire packet) instead of "-s9000".
+  * Beware of using too much disk space, especially standalone mode.
+  * If you capture too many small connections giving a huge index.html,
+    try using the -m option to ignore small connections. eg "-m 1k".
+  * snoop logs may actually work better. Snoop logs are based on RFC1761,
+    however there are many variants of tcpdump/libpcap and this program
+    cannot read them all. If you have Ethereal you can create snoop logs
+    during the "save as" option. On Solaris use "snoop -o logfile".
+  * tcpdump logs may not be portable between OSs that use different sized
+    timestamps or endian.
+  * Logs are best created in a memory filesystem for speed, usually /tmp.
+  * For X11 or VNC playbacks, first practise by replaying a recent captured
+    session of your own. The biggest problem is color depth, your screen
+    must match the capture. For X11 check authentication (xhost +), for
+    VNC check the viewers options (-8bit, "Hextile", ...)
+  * SSH analysis can be performed with the "sshkeydata" program as
+    demonstrated on http://www.brendangregg.com/sshanalysis.html .
+    chaosreader provides the input files (*.keydata) that sshkeydata
+    analyses.
+
+BUGS
+  The following assumptions may cause problems (check for new vers):
+  * A lower port number = the service type. Eg with ports 31247 and 23,
+    the actual type of session is telnet (23). This may not work for
+    some things (eg, VNC).
+  * Time based order is more important for 2-way sessions (eg telnet),
+    SEQ order is more import for 1-way transfers (eg ftp-data).
+  * One particular TCP session isn't active for long enough that the SEQ
+    number loops (or even wraps).
+
+EXAMPLES
+  * Example 1:
+
+    tcpdump -s9000 -w output1        # create tcpdump capture file
+
+    chaosreader output1              # extract recognised sessions, or,
+
+    chaosreader -ve output1          # gimme everything, or,
+
+    chaosreader -p 20,21,23 output1  # only ftp and telnet...
+
+  * Example 2:
+
+    snoop -o output1                 # create snoop capture file instead
+
+    chaosreader output1              # extract recognised sessions...
+
+  * Example 3:
+
+    chaosreader -S 2,5      # Standalone, sniff network 5 times for 2 mins
+                            each. View index.html for progress (or .text)
+
+SEE ALSO
+  tcpdump(8), snoop(1M), chaosreader help page.
+
+AUTHORS
+  chaosreader was written by Brendan Gregg.
+
+  This manual page was written by Joao Eriberto Mota Filho <eriberto@debian.org> for the Debian project (but may be used by others).
